@@ -5,12 +5,18 @@ using UnityEngine;
 public class groundCheck : MonoBehaviour {
 
     public bool Grounded;
-   
-    private void OnTriggerStay(Collider collision)
+
+    /*private void OnTriggerEnter(Collider collision)
     {
 
         Grounded = true;
         
+    }
+    */
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Grounded = true;
     }
 
     private void OnTriggerExit(Collider collision)

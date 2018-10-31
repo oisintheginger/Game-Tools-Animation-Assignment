@@ -8,6 +8,8 @@ public class spellBall : MonoBehaviour {
     Vector3 projectForce;
     [SerializeField]
     float projectileSpeed;
+
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -22,6 +24,15 @@ public class spellBall : MonoBehaviour {
         if(other.gameObject.tag =="Player")
         {
             Destroy(gameObject);
+            if (other.gameObject.GetComponent<Animator>().GetBool("isBlocking") == false)
+            {
+                other.gameObject.GetComponent<playerMove>().playerHealth -= 1;
+            }
+
+            if (other.gameObject.GetComponent<playerMove>().playerHealth == 0 )
+            {
+                other.gameObject.GetComponent<Animator>().SetBool("PlayerDead", true);
+            }
         }
     }
 }
