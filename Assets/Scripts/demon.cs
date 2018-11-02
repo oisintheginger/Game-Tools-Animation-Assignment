@@ -19,12 +19,16 @@ public class demon : MonoBehaviour {
     Animator animD;
     Rigidbody demonRB;
 
+    //sound stufff
+    AudioSource audioD;
+    [SerializeField] AudioClip fireball;
 
 
     private void Start()
     {
         animD = GetComponent<Animator>();
         demonRB = GetComponent<Rigidbody>();
+        audioD = GetComponent<AudioSource>();
     }
     
 
@@ -74,6 +78,9 @@ public class demon : MonoBehaviour {
         {
             
             Instantiate(projectileObj, projectileTransform.position, projectileTransform.rotation);
+            audioD.volume = 0.2f;
+            audioD.pitch = 1f;
+            audioD.PlayOneShot(fireball);
         }
         
         

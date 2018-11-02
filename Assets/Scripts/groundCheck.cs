@@ -6,13 +6,7 @@ public class groundCheck : MonoBehaviour {
 
     public bool Grounded;
 
-    /*private void OnTriggerEnter(Collider collision)
-    {
-
-        Grounded = true;
-        
-    }
-    */
+    
 
     private void OnTriggerEnter(Collider other)
     {

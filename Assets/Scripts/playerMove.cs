@@ -7,7 +7,12 @@ public class playerMove : MonoBehaviour {
     Rigidbody playerRB;
     Animator anim;
 
+    //Sound stuff
+    [SerializeField] AudioClip stepSound, swingSound,jumpSound, landSound;
 
+    AudioSource playerSound;
+
+   
     public int playerHealth;
 
     [SerializeField]
@@ -23,21 +28,18 @@ public class playerMove : MonoBehaviour {
     public groundCheck gc;
 
     //drawing a circle for the range
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
-        
-    }
+    
 
     // Use this for initialization
     void Start () {
         playerRB = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        playerSound = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        
 
         forwardForce = strength * transform.forward;
         anim.SetFloat("VertSpeed", playerRB.velocity.y);
@@ -76,10 +78,15 @@ public class playerMove : MonoBehaviour {
 
 
         //running
-        if (Input.GetKey(KeyCode.W)&&gc.Grounded==false&& anim.GetBool("PlayerDead") == false)
+        if (Input.GetKey(KeyCode.W)&& anim.GetBool("PlayerDead") == false)
         {
-            forwardForce = strength * transform.forward;
-            playerRB.AddForce(forwardForce);
+            if (gc.Grounded == false)
+            {
+
+                forwardForce = strength * transform.forward;
+                playerRB.AddForce(forwardForce);
+            }
+            
         }
         if (Input.GetKey(KeyCode.S) && gc.Grounded == false&& anim.GetBool("PlayerDead") == false)
         {
@@ -106,10 +113,72 @@ public class playerMove : MonoBehaviour {
         }
     }
 
+    //stepsound
+    public void footStepSound()
+    {
+        StepSound();
+    }
+
+    private void StepSound()
+    {
+        playerSound.volume = 0.076f;
+        playerSound.pitch = 1f;
+        playerSound.PlayOneShot(stepSound);
+    }
+
+    
+
+    //swingsound
+    public void swingingSound()
+    {
+        swingSFX();
+    }
+
+    private void swingSFX()
+    {
+        playerSound.volume = 1;
+        playerSound.pitch = 1f;
+        playerSound.PlayOneShot(swingSound);
+    }
+
+    //jumpsound
+    public void jumpingSound()
+    {
+        jumpSFX();
+    }
+    private void jumpSFX()
+    {
+        playerSound.volume = 0.12f;
+        playerSound.pitch = 0.9f;
+        playerSound.PlayOneShot(jumpSound);
+    }
+
+    public void landingSound()
+    {
+        landSFX();
+    }
+    private void landSFX()
+    {
+        playerSound.volume = 0.076f;
+        playerSound.pitch = 2.19f;
+        playerSound.PlayOneShot(landSound);
+    }
+
+
+
+
+    //using a timer rather than an animation event just to show I could do it using an IEnumerator
     IEnumerator jumpWait()
     {
         anim.SetTrigger("JumpUp");
         yield return new WaitForSecondsRealtime(0.1f); //waiting for the animation to be at the correct point before the jumpforce is added
         playerRB.AddForce(JumpForce);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
+
     }
 }
