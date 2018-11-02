@@ -20,7 +20,7 @@ public class playerMove : MonoBehaviour {
     [SerializeField]
     float strength, maxVert,attackRadius;
 
-    // raycast transform
+    //raycast transform
     [SerializeField]
     Transform raycastHeight;
 
@@ -32,6 +32,7 @@ public class playerMove : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        //accessing componenets
         playerRB = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         playerSound = GetComponent<AudioSource>();
@@ -42,6 +43,7 @@ public class playerMove : MonoBehaviour {
         
 
         forwardForce = strength * transform.forward;
+        //setting the floats in the blend tree to react to player input
         anim.SetFloat("VertSpeed", playerRB.velocity.y);
         anim.SetBool("isGrounded", gc.Grounded);
         float m_turn = Input.GetAxis("Horizontal");

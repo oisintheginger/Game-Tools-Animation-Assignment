@@ -72,6 +72,8 @@ public class demon : MonoBehaviour {
         
     }
 
+
+    //public void to be accessed by the animation event to instantiate projectile prefab
     public void projectile()
     {
         if (animD.GetBool("DemonDead")==false)

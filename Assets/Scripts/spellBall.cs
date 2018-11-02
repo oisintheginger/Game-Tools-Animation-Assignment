@@ -19,6 +19,7 @@ public class spellBall : MonoBehaviour {
         rb.AddForce(projectForce);
         Destroy(gameObject, 3.0f);
 	}
+    //subtracts damage from player health when projectile hits object with player tag
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag =="Player")
